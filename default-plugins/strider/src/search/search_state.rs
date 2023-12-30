@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 use zellij_tile::prelude::{
     hide_self, open_file, open_file_floating, open_terminal, open_terminal_floating,
-    post_message_to, FileToOpen, Key, PluginMessage,
+    post_message_to, CharOrArrow, FileToOpen, Key, PluginMessage,
 };
 
 pub const CURRENT_SEARCH_TERM: &str = "/data/current_search_term";
@@ -31,10 +31,10 @@ impl SearchState {
             Key::Up => self.move_search_selection_up(),
             Key::Char('\n') => self.open_search_result_in_editor(),
             Key::BackTab => self.open_search_result_in_terminal(),
-            Key::Ctrl('f') => {
+            Key::Ctrl(CharOrArrow::Char('f')) => {
                 self.should_open_floating = !self.should_open_floating;
             },
-            Key::Ctrl('r') => self.toggle_search_filter(),
+            Key::Ctrl(CharOrArrow::Char('r')) => self.toggle_search_filter(),
             Key::Esc => {
                 if !self.search_term.is_empty() {
                     self.clear_state();

@@ -17,7 +17,7 @@ fn can_define_keybindings_in_configfile() {
     let config = Config::from_kdl(config_contents, None).unwrap();
     let ctrl_g_normal_mode_action = config
         .keybinds
-        .get_actions_for_key_in_mode(&InputMode::Normal, &Key::Ctrl('g'));
+        .get_actions_for_key_in_mode(&InputMode::Normal, &Key::Ctrl(CharOrArrow::Char('g')));
     assert_eq!(
         ctrl_g_normal_mode_action,
         Some(&vec![Action::SwitchToMode(InputMode::Locked)]),
@@ -225,13 +225,13 @@ fn can_clear_default_keybindings() {
     let config = Config::from_kdl(config_contents, Some(default_config)).unwrap();
     let ctrl_g_normal_mode_action = config
         .keybinds
-        .get_actions_for_key_in_mode(&InputMode::Normal, &Key::Ctrl('g'));
+        .get_actions_for_key_in_mode(&InputMode::Normal, &Key::Ctrl(CharOrArrow::Char('g')));
     let z_in_pane_mode = config
         .keybinds
         .get_actions_for_key_in_mode(&InputMode::Pane, &Key::Char('z'));
     let ctrl_r_in_normal_mode = config
         .keybinds
-        .get_actions_for_key_in_mode(&InputMode::Normal, &Key::Ctrl('r'));
+        .get_actions_for_key_in_mode(&InputMode::Normal, &Key::Ctrl(CharOrArrow::Char('r')));
     let r_in_pane_mode = config
         .keybinds
         .get_actions_for_key_in_mode(&InputMode::Pane, &Key::Char('r'));
@@ -278,7 +278,7 @@ fn can_clear_default_keybindings_per_single_mode() {
     let config = Config::from_kdl(config_contents, Some(default_config)).unwrap();
     let ctrl_g_normal_mode_action = config
         .keybinds
-        .get_actions_for_key_in_mode(&InputMode::Normal, &Key::Ctrl('g'));
+        .get_actions_for_key_in_mode(&InputMode::Normal, &Key::Ctrl(CharOrArrow::Char('g')));
     let z_in_pane_mode = config
         .keybinds
         .get_actions_for_key_in_mode(&InputMode::Pane, &Key::Char('z'));
@@ -327,10 +327,10 @@ fn can_unbind_multiple_keys_globally() {
     let config = Config::from_kdl(config_contents, Some(default_config)).unwrap();
     let ctrl_g_normal_mode_action = config
         .keybinds
-        .get_actions_for_key_in_mode(&InputMode::Normal, &Key::Ctrl('g'));
+        .get_actions_for_key_in_mode(&InputMode::Normal, &Key::Ctrl(CharOrArrow::Char('g')));
     let ctrl_g_pane_mode_action = config
         .keybinds
-        .get_actions_for_key_in_mode(&InputMode::Pane, &Key::Ctrl('g'));
+        .get_actions_for_key_in_mode(&InputMode::Pane, &Key::Ctrl(CharOrArrow::Char('g')));
     let r_in_pane_mode = config
         .keybinds
         .get_actions_for_key_in_mode(&InputMode::Pane, &Key::Char('r'));
@@ -387,10 +387,10 @@ fn can_unbind_multiple_keys_per_single_mode() {
     let config = Config::from_kdl(config_contents, Some(default_config)).unwrap();
     let ctrl_g_normal_mode_action = config
         .keybinds
-        .get_actions_for_key_in_mode(&InputMode::Normal, &Key::Ctrl('g'));
+        .get_actions_for_key_in_mode(&InputMode::Normal, &Key::Ctrl(CharOrArrow::Char('g')));
     let ctrl_g_pane_mode_action = config
         .keybinds
-        .get_actions_for_key_in_mode(&InputMode::Pane, &Key::Ctrl('g'));
+        .get_actions_for_key_in_mode(&InputMode::Pane, &Key::Ctrl(CharOrArrow::Char('g')));
     let r_in_pane_mode = config
         .keybinds
         .get_actions_for_key_in_mode(&InputMode::Pane, &Key::Char('r'));
@@ -438,7 +438,7 @@ fn can_define_shared_keybinds_for_all_modes() {
     for mode in InputMode::iter() {
         let action_in_mode = config
             .keybinds
-            .get_actions_for_key_in_mode(&mode, &Key::Ctrl('g'));
+            .get_actions_for_key_in_mode(&mode, &Key::Ctrl(CharOrArrow::Char('g')));
         assert_eq!(
             action_in_mode,
             Some(&vec![Action::SwitchToMode(InputMode::Locked)]),
@@ -460,7 +460,7 @@ fn can_define_shared_keybinds_with_exclusion() {
     for mode in InputMode::iter() {
         let action_in_mode = config
             .keybinds
-            .get_actions_for_key_in_mode(&mode, &Key::Ctrl('g'));
+            .get_actions_for_key_in_mode(&mode, &Key::Ctrl(CharOrArrow::Char('g')));
         if mode == InputMode::Locked {
             assert_eq!(action_in_mode, None, "Keybind unbound in excluded mode");
         } else {
@@ -486,7 +486,7 @@ fn can_define_shared_keybinds_with_inclusion() {
     for mode in InputMode::iter() {
         let action_in_mode = config
             .keybinds
-            .get_actions_for_key_in_mode(&mode, &Key::Ctrl('g'));
+            .get_actions_for_key_in_mode(&mode, &Key::Ctrl(CharOrArrow::Char('g')));
         if mode == InputMode::Normal || mode == InputMode::Resize || mode == InputMode::Pane {
             assert_eq!(
                 action_in_mode,

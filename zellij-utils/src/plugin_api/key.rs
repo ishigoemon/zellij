@@ -13,7 +13,7 @@ impl TryFrom<ProtobufKey> for Key {
         match key_modifier {
             Some(KeyModifier::Ctrl) => {
                 let character = char_from_main_key(protobuf_key.main_key)?;
-                Ok(Key::Ctrl(character))
+                Ok(Key::Ctrl(CharOrArrow::Char(character)))
             },
             Some(KeyModifier::Alt) => {
                 let char_or_arrow = CharOrArrow::from_main_key(protobuf_key.main_key)?;
@@ -125,10 +125,25 @@ impl TryFrom<Key> for ProtobufKey {
                     main_key: Some(main_key),
                 })
             },
-            Key::Ctrl(character) => Ok(ProtobufKey {
-                modifier: Some(KeyModifier::Ctrl as i32),
-                main_key: Some(MainKey::Char((character as u8) as i32)),
-            }),
+            Key::Ctrl(char_or_arrow) => {
+                let main_key = match char_or_arrow {
+                    CharOrArrow::Char(character) => MainKey::Char((character as u8) as i32),
+                    CharOrArrow::Direction(Direction::Left) => {
+                        MainKey::Key(NamedKey::LeftArrow as i32)
+                    },
+                    CharOrArrow::Direction(Direction::Right) => {
+                        MainKey::Key(NamedKey::RightArrow as i32)
+                    },
+                    CharOrArrow::Direction(Direction::Up) => MainKey::Key(NamedKey::UpArrow as i32),
+                    CharOrArrow::Direction(Direction::Down) => {
+                        MainKey::Key(NamedKey::DownArrow as i32)
+                    },
+                };
+                Ok(ProtobufKey {
+                    modifier: Some(KeyModifier::Ctrl as i32),
+                    main_key: Some(main_key),
+                })
+            },
             Key::BackTab => Ok(ProtobufKey {
                 modifier: None,
                 main_key: Some(MainKey::Key(NamedKey::Tab as i32)),

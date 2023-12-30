@@ -659,7 +659,11 @@ mod tests {
     #[test]
     // Modifier is the superkey, mustn't appear in angled brackets
     fn long_mode_shortcut_selected_with_ctrl_binding_shared_superkey() {
-        let key = KeyShortcut::new(KeyMode::Selected, KeyAction::Session, Some(Key::Ctrl('0')));
+        let key = KeyShortcut::new(
+            KeyMode::Selected,
+            KeyAction::Session,
+            Some(Key::Ctrl(CharOrArrow::Char('0'))),
+        );
         let color = colored_elements();
 
         let ret = long_mode_shortcut(&key, color, "+", true, false);
@@ -671,7 +675,11 @@ mod tests {
     #[test]
     // Modifier must be in the angled brackets
     fn long_mode_shortcut_selected_with_ctrl_binding_no_shared_superkey() {
-        let key = KeyShortcut::new(KeyMode::Selected, KeyAction::Session, Some(Key::Ctrl('0')));
+        let key = KeyShortcut::new(
+            KeyMode::Selected,
+            KeyAction::Session,
+            Some(Key::Ctrl(CharOrArrow::Char('0'))),
+        );
         let color = colored_elements();
 
         let ret = long_mode_shortcut(&key, color, "+", false, false);
@@ -709,7 +717,11 @@ mod tests {
     // Note that when "shared_super" is true, the tile **cannot** be the first on the line, so we
     // ignore **first** here.
     fn long_mode_shortcut_selected_with_ctrl_binding_and_shared_super_and_first_tile() {
-        let key = KeyShortcut::new(KeyMode::Selected, KeyAction::Session, Some(Key::Ctrl('0')));
+        let key = KeyShortcut::new(
+            KeyMode::Selected,
+            KeyAction::Session,
+            Some(Key::Ctrl(CharOrArrow::Char('0'))),
+        );
         let color = colored_elements();
 
         let ret = long_mode_shortcut(&key, color, "+", true, true);
@@ -731,7 +743,11 @@ mod tests {
 
     #[test]
     fn short_mode_shortcut_selected_with_ctrl_binding_no_shared_super() {
-        let key = KeyShortcut::new(KeyMode::Selected, KeyAction::Session, Some(Key::Ctrl('0')));
+        let key = KeyShortcut::new(
+            KeyMode::Selected,
+            KeyAction::Session,
+            Some(Key::Ctrl(CharOrArrow::Char('0'))),
+        );
         let color = colored_elements();
 
         let ret = short_mode_shortcut(&key, color, "+", false, false);
@@ -742,7 +758,11 @@ mod tests {
 
     #[test]
     fn short_mode_shortcut_selected_with_ctrl_binding_shared_super() {
-        let key = KeyShortcut::new(KeyMode::Selected, KeyAction::Session, Some(Key::Ctrl('0')));
+        let key = KeyShortcut::new(
+            KeyMode::Selected,
+            KeyAction::Session,
+            Some(Key::Ctrl(CharOrArrow::Char('0'))),
+        );
         let color = colored_elements();
 
         let ret = short_mode_shortcut(&key, color, "+", true, false);
@@ -855,9 +875,9 @@ mod tests {
             mode: InputMode::Normal,
             keybinds : vec![
                 (InputMode::Normal, vec![
-                    (Key::Ctrl('a'), vec![Action::SwitchToMode(InputMode::Pane)]),
-                    (Key::Ctrl('b'), vec![Action::SwitchToMode(InputMode::Resize)]),
-                    (Key::Ctrl('c'), vec![Action::SwitchToMode(InputMode::Move)]),
+                    (Key::Ctrl(CharOrArrow::Char('a')), vec![Action::SwitchToMode(InputMode::Pane)]),
+                    (Key::Ctrl(CharOrArrow::Char('b')), vec![Action::SwitchToMode(InputMode::Resize)]),
+                    (Key::Ctrl(CharOrArrow::Char('c')), vec![Action::SwitchToMode(InputMode::Move)]),
                 ]),
             ],
             ..ModeInfo::default()
@@ -879,8 +899,8 @@ mod tests {
             mode: InputMode::Normal,
             keybinds : vec![
                 (InputMode::Normal, vec![
-                    (Key::Ctrl('a'), vec![Action::SwitchToMode(InputMode::Pane)]),
-                    (Key::Ctrl('b'), vec![Action::SwitchToMode(InputMode::Resize)]),
+                    (Key::Ctrl(CharOrArrow::Char('a')), vec![Action::SwitchToMode(InputMode::Pane)]),
+                    (Key::Ctrl(CharOrArrow::Char('b')), vec![Action::SwitchToMode(InputMode::Resize)]),
                     (Key::Char('c'), vec![Action::SwitchToMode(InputMode::Move)]),
                 ]),
             ],
@@ -903,7 +923,7 @@ mod tests {
             mode: InputMode::Normal,
             keybinds : vec![
                 (InputMode::Normal, vec![
-                    (Key::Ctrl('a'), vec![Action::SwitchToMode(InputMode::Locked)]),
+                    (Key::Ctrl(CharOrArrow::Char('a')), vec![Action::SwitchToMode(InputMode::Locked)]),
                     (Key::Backspace, vec![Action::SwitchToMode(InputMode::Pane)]),
                     (Key::Char('\n'), vec![Action::SwitchToMode(InputMode::Tab)]),
                     (Key::Char('\t'), vec![Action::SwitchToMode(InputMode::Resize)]),
@@ -930,11 +950,11 @@ mod tests {
             mode: InputMode::Normal,
             keybinds : vec![
                 (InputMode::Normal, vec![
-                    (Key::Ctrl('a'), vec![Action::SwitchToMode(InputMode::Locked)]),
-                    (Key::Ctrl('b'), vec![Action::SwitchToMode(InputMode::Pane)]),
-                    (Key::Ctrl('c'), vec![Action::SwitchToMode(InputMode::Tab)]),
-                    (Key::Ctrl('d'), vec![Action::SwitchToMode(InputMode::Resize)]),
-                    (Key::Ctrl('e'), vec![Action::SwitchToMode(InputMode::Move)]),
+                    (Key::Ctrl(CharOrArrow::Char('a')), vec![Action::SwitchToMode(InputMode::Locked)]),
+                    (Key::Ctrl(CharOrArrow::Char('b')), vec![Action::SwitchToMode(InputMode::Pane)]),
+                    (Key::Ctrl(CharOrArrow::Char('c')), vec![Action::SwitchToMode(InputMode::Tab)]),
+                    (Key::Ctrl(CharOrArrow::Char('d')), vec![Action::SwitchToMode(InputMode::Resize)]),
+                    (Key::Ctrl(CharOrArrow::Char('e')), vec![Action::SwitchToMode(InputMode::Move)]),
                 ]),
             ],
             ..ModeInfo::default()
@@ -953,9 +973,9 @@ mod tests {
             mode: InputMode::Normal,
             keybinds : vec![
                 (InputMode::Normal, vec![
-                    (Key::Ctrl('a'), vec![Action::SwitchToMode(InputMode::Pane)]),
-                    (Key::Ctrl('b'), vec![Action::SwitchToMode(InputMode::Resize)]),
-                    (Key::Ctrl('c'), vec![Action::SwitchToMode(InputMode::Move)]),
+                    (Key::Ctrl(CharOrArrow::Char('a')), vec![Action::SwitchToMode(InputMode::Pane)]),
+                    (Key::Ctrl(CharOrArrow::Char('b')), vec![Action::SwitchToMode(InputMode::Resize)]),
+                    (Key::Ctrl(CharOrArrow::Char('c')), vec![Action::SwitchToMode(InputMode::Move)]),
                 ]),
             ],
             ..ModeInfo::default()

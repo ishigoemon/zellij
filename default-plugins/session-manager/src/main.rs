@@ -170,7 +170,7 @@ impl State {
                     .update_search_term(&self.search_term, &self.colors);
             }
             should_render = true;
-        } else if let Key::Ctrl('w') = key {
+        } else if let Key::Ctrl(CharOrArrow::Char('w')) = key {
             if self.sessions.is_searching || self.browsing_resurrection_sessions {
                 // no-op
             } else if self.new_session_name.is_some() {
@@ -179,7 +179,7 @@ impl State {
                 self.new_session_name = Some(String::new());
             }
             should_render = true;
-        } else if let Key::Ctrl('r') = key {
+        } else if let Key::Ctrl(CharOrArrow::Char('r')) = key {
             if self.sessions.is_searching || self.browsing_resurrection_sessions {
                 // no-op
             } else if self.renaming_session_name.is_some() {
@@ -188,7 +188,7 @@ impl State {
                 self.renaming_session_name = Some(String::new());
             }
             should_render = true;
-        } else if let Key::Ctrl('c') = key {
+        } else if let Key::Ctrl(CharOrArrow::Char('c')) = key {
             if let Some(new_session_name) = self.new_session_name.as_mut() {
                 if new_session_name.is_empty() {
                     self.new_session_name = None;
@@ -219,7 +219,7 @@ impl State {
                 self.resurrectable_sessions.delete_selected_session();
                 should_render = true;
             }
-        } else if let Key::Ctrl('d') = key {
+        } else if let Key::Ctrl(CharOrArrow::Char('d')) = key {
             if self.browsing_resurrection_sessions {
                 self.resurrectable_sessions
                     .show_delete_all_sessions_warning();

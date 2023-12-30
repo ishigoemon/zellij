@@ -56,7 +56,7 @@ pub enum Key {
     F(u8),
     Char(char),
     Alt(CharOrArrow),
-    Ctrl(char),
+    Ctrl(CharOrArrow),
     BackTab,
     Null,
     Esc,
@@ -76,13 +76,24 @@ impl FromStr for Key {
         }
         match (modifier, main_key) {
             (Some("Ctrl"), Some(main_key)) => {
-                let mut key_chars = main_key.chars();
-                let key_count = main_key.chars().count();
-                if key_count == 1 {
-                    let key_char = key_chars.next().unwrap();
-                    Ok(Key::Ctrl(key_char))
-                } else {
-                    Err(format!("Failed to parse key: {}", key_str).into())
+                match main_key {
+                    // why crate::data::Direction and not just Direction?
+                    // Because it's a different type that we export in this wasm mandated soup - we
+                    // don't like it either! This will be solved as we chip away at our tech-debt
+                    "Left" => Ok(Key::Ctrl(CharOrArrow::Direction(Direction::Left))),
+                    "Right" => Ok(Key::Ctrl(CharOrArrow::Direction(Direction::Right))),
+                    "Up" => Ok(Key::Ctrl(CharOrArrow::Direction(Direction::Up))),
+                    "Down" => Ok(Key::Ctrl(CharOrArrow::Direction(Direction::Down))),
+                    _ => {
+                        let mut key_chars = main_key.chars();
+                        let key_count = main_key.chars().count();
+                        if key_count == 1 {
+                            let key_char = key_chars.next().unwrap();
+                            Ok(Key::Ctrl(CharOrArrow::Char(key_char)))
+                        } else {
+                            Err(format!("Failed to parse key: {}", key_str).into())
+                        }
+                    },
                 }
             },
             (Some("Alt"), Some(main_key)) => {
@@ -174,7 +185,7 @@ impl fmt::Display for Key {
                 _ => write!(f, "{}", c),
             },
             Key::Alt(c) => write!(f, "Alt+{}", c),
-            Key::Ctrl(c) => write!(f, "Ctrl+{}", Key::Char(*c)),
+            Key::Ctrl(c) => write!(f, "Ctrl+{}", c),
             Key::Null => write!(f, "NULL"),
             Key::Esc => write!(f, "ESC"),
         }

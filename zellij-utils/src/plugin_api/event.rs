@@ -961,7 +961,7 @@ fn serialize_mode_update_event_with_non_default_values() {
                 InputMode::Pane,
                 vec![
                     (
-                        Key::Ctrl('b'),
+                        Key::Ctrl(crate::data::CharOrArrow::Char('b')),
                         vec![
                             Action::SwitchToMode(InputMode::Tmux),
                             Action::Write(vec![10]),
@@ -1084,7 +1084,7 @@ fn serialize_pane_update_event() {
 #[test]
 fn serialize_key_event() {
     use prost::Message;
-    let key_event = Event::Key(Key::Ctrl('a'));
+    let key_event = Event::Key(Key::Ctrl(crate::data::CharOrArrow::Char('a')));
     let protobuf_event: ProtobufEvent = key_event.clone().try_into().unwrap();
     let serialized_protobuf_event = protobuf_event.encode_to_vec();
     let deserialized_protobuf_event: ProtobufEvent =

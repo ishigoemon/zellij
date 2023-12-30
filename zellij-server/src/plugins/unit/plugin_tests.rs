@@ -6,7 +6,9 @@ use std::collections::BTreeMap;
 use std::path::PathBuf;
 use tempfile::tempdir;
 use wasmer::Store;
-use zellij_utils::data::{Event, Key, PermissionStatus, PermissionType, PluginCapabilities};
+use zellij_utils::data::{
+    CharOrArrow, Event, Key, PermissionStatus, PermissionType, PluginCapabilities,
+};
 use zellij_utils::errors::ErrorContext;
 use zellij_utils::input::layout::{Layout, PluginUserConfiguration, RunPlugin, RunPluginLocation};
 use zellij_utils::input::permission::PermissionCache;
@@ -3255,7 +3257,7 @@ pub fn previous_swap_layout_plugin_command() {
     let _ = plugin_thread_sender.send(PluginInstruction::Update(vec![(
         None,
         Some(client_id),
-        Event::Key(Key::Ctrl('a')), // this triggers the enent in the fixture plugin
+        Event::Key(Key::Ctrl(CharOrArrow::Char('a'))), // this triggers the enent in the fixture plugin
     )]));
     screen_thread.join().unwrap(); // this might take a while if the cache is cold
     teardown();
@@ -3325,7 +3327,7 @@ pub fn next_swap_layout_plugin_command() {
     let _ = plugin_thread_sender.send(PluginInstruction::Update(vec![(
         None,
         Some(client_id),
-        Event::Key(Key::Ctrl('b')), // this triggers the enent in the fixture plugin
+        Event::Key(Key::Ctrl(CharOrArrow::Char('b'))), // this triggers the enent in the fixture plugin
     )]));
     screen_thread.join().unwrap(); // this might take a while if the cache is cold
     teardown();
@@ -3395,7 +3397,7 @@ pub fn go_to_tab_name_plugin_command() {
     let _ = plugin_thread_sender.send(PluginInstruction::Update(vec![(
         None,
         Some(client_id),
-        Event::Key(Key::Ctrl('c')), // this triggers the enent in the fixture plugin
+        Event::Key(Key::Ctrl(CharOrArrow::Char('c'))), // this triggers the enent in the fixture plugin
     )]));
     screen_thread.join().unwrap(); // this might take a while if the cache is cold
     teardown();
@@ -3465,7 +3467,7 @@ pub fn focus_or_create_tab_plugin_command() {
     let _ = plugin_thread_sender.send(PluginInstruction::Update(vec![(
         None,
         Some(client_id),
-        Event::Key(Key::Ctrl('d')), // this triggers the enent in the fixture plugin
+        Event::Key(Key::Ctrl(CharOrArrow::Char('d'))), // this triggers the enent in the fixture plugin
     )]));
     screen_thread.join().unwrap(); // this might take a while if the cache is cold
     teardown();
@@ -3535,7 +3537,7 @@ pub fn go_to_tab() {
     let _ = plugin_thread_sender.send(PluginInstruction::Update(vec![(
         None,
         Some(client_id),
-        Event::Key(Key::Ctrl('e')), // this triggers the enent in the fixture plugin
+        Event::Key(Key::Ctrl(CharOrArrow::Char('e'))), // this triggers the enent in the fixture plugin
     )]));
     screen_thread.join().unwrap(); // this might take a while if the cache is cold
     teardown();
@@ -3605,7 +3607,7 @@ pub fn start_or_reload_plugin() {
     let _ = plugin_thread_sender.send(PluginInstruction::Update(vec![(
         None,
         Some(client_id),
-        Event::Key(Key::Ctrl('f')), // this triggers the enent in the fixture plugin
+        Event::Key(Key::Ctrl(CharOrArrow::Char('f'))), // this triggers the enent in the fixture plugin
     )]));
     screen_thread.join().unwrap(); // this might take a while if the cache is cold
     teardown();
@@ -3836,7 +3838,7 @@ pub fn open_file_floating_plugin_command() {
     let _ = plugin_thread_sender.send(PluginInstruction::Update(vec![(
         None,
         Some(client_id),
-        Event::Key(Key::Ctrl('h')), // this triggers the enent in the fixture plugin
+        Event::Key(Key::Ctrl(CharOrArrow::Char('h'))), // this triggers the enent in the fixture plugin
     )]));
     pty_thread.join().unwrap(); // this might take a while if the cache is cold
     teardown();
@@ -3913,7 +3915,7 @@ pub fn open_file_plugin_command() {
     let _ = plugin_thread_sender.send(PluginInstruction::Update(vec![(
         None,
         Some(client_id),
-        Event::Key(Key::Ctrl('g')), // this triggers the enent in the fixture plugin
+        Event::Key(Key::Ctrl(CharOrArrow::Char('g'))), // this triggers the enent in the fixture plugin
     )]));
     pty_thread.join().unwrap(); // this might take a while if the cache is cold
     teardown();
@@ -3991,7 +3993,7 @@ pub fn open_file_with_line_plugin_command() {
     let _ = plugin_thread_sender.send(PluginInstruction::Update(vec![(
         None,
         Some(client_id),
-        Event::Key(Key::Ctrl('i')), // this triggers the enent in the fixture plugin
+        Event::Key(Key::Ctrl(CharOrArrow::Char('i'))), // this triggers the enent in the fixture plugin
     )]));
     pty_thread.join().unwrap(); // this might take a while if the cache is cold
     teardown();
@@ -4068,7 +4070,7 @@ pub fn open_file_with_line_floating_plugin_command() {
     let _ = plugin_thread_sender.send(PluginInstruction::Update(vec![(
         None,
         Some(client_id),
-        Event::Key(Key::Ctrl('j')), // this triggers the enent in the fixture plugin
+        Event::Key(Key::Ctrl(CharOrArrow::Char('j'))), // this triggers the enent in the fixture plugin
     )]));
     pty_thread.join().unwrap(); // this might take a while if the cache is cold
     teardown();
@@ -4145,7 +4147,7 @@ pub fn open_terminal_plugin_command() {
     let _ = plugin_thread_sender.send(PluginInstruction::Update(vec![(
         None,
         Some(client_id),
-        Event::Key(Key::Ctrl('k')), // this triggers the enent in the fixture plugin
+        Event::Key(Key::Ctrl(CharOrArrow::Char('k'))), // this triggers the enent in the fixture plugin
     )]));
     pty_thread.join().unwrap(); // this might take a while if the cache is cold
     teardown();
@@ -4222,7 +4224,7 @@ pub fn open_terminal_floating_plugin_command() {
     let _ = plugin_thread_sender.send(PluginInstruction::Update(vec![(
         None,
         Some(client_id),
-        Event::Key(Key::Ctrl('l')), // this triggers the enent in the fixture plugin
+        Event::Key(Key::Ctrl(CharOrArrow::Char('l'))), // this triggers the enent in the fixture plugin
     )]));
     pty_thread.join().unwrap(); // this might take a while if the cache is cold
     teardown();
@@ -4299,7 +4301,7 @@ pub fn open_command_pane_plugin_command() {
     let _ = plugin_thread_sender.send(PluginInstruction::Update(vec![(
         None,
         Some(client_id),
-        Event::Key(Key::Ctrl('m')), // this triggers the enent in the fixture plugin
+        Event::Key(Key::Ctrl(CharOrArrow::Char('m'))), // this triggers the enent in the fixture plugin
     )]));
     pty_thread.join().unwrap(); // this might take a while if the cache is cold
     teardown();
@@ -4376,7 +4378,7 @@ pub fn open_command_pane_floating_plugin_command() {
     let _ = plugin_thread_sender.send(PluginInstruction::Update(vec![(
         None,
         Some(client_id),
-        Event::Key(Key::Ctrl('n')), // this triggers the enent in the fixture plugin
+        Event::Key(Key::Ctrl(CharOrArrow::Char('n'))), // this triggers the enent in the fixture plugin
     )]));
     pty_thread.join().unwrap(); // this might take a while if the cache is cold
     teardown();
@@ -4446,7 +4448,7 @@ pub fn switch_to_tab_plugin_command() {
     let _ = plugin_thread_sender.send(PluginInstruction::Update(vec![(
         None,
         Some(client_id),
-        Event::Key(Key::Ctrl('o')), // this triggers the enent in the fixture plugin
+        Event::Key(Key::Ctrl(CharOrArrow::Char('o'))), // this triggers the enent in the fixture plugin
     )]));
     screen_thread.join().unwrap(); // this might take a while if the cache is cold
     teardown();
@@ -4511,7 +4513,7 @@ pub fn hide_self_plugin_command() {
     let _ = plugin_thread_sender.send(PluginInstruction::Update(vec![(
         None,
         Some(client_id),
-        Event::Key(Key::Ctrl('p')), // this triggers the enent in the fixture plugin
+        Event::Key(Key::Ctrl(CharOrArrow::Char('p'))), // this triggers the enent in the fixture plugin
     )]));
     screen_thread.join().unwrap(); // this might take a while if the cache is cold
     teardown();
@@ -4576,7 +4578,7 @@ pub fn show_self_plugin_command() {
     let _ = plugin_thread_sender.send(PluginInstruction::Update(vec![(
         None,
         Some(client_id),
-        Event::Key(Key::Ctrl('q')), // this triggers the enent in the fixture plugin
+        Event::Key(Key::Ctrl(CharOrArrow::Char('q'))), // this triggers the enent in the fixture plugin
     )]));
     screen_thread.join().unwrap(); // this might take a while if the cache is cold
     teardown();
@@ -4646,7 +4648,7 @@ pub fn close_terminal_pane_plugin_command() {
     let _ = plugin_thread_sender.send(PluginInstruction::Update(vec![(
         None,
         Some(client_id),
-        Event::Key(Key::Ctrl('r')), // this triggers the enent in the fixture plugin
+        Event::Key(Key::Ctrl(CharOrArrow::Char('r'))), // this triggers the enent in the fixture plugin
     )]));
     screen_thread.join().unwrap(); // this might take a while if the cache is cold
     teardown();
@@ -4716,7 +4718,7 @@ pub fn close_plugin_pane_plugin_command() {
     let _ = plugin_thread_sender.send(PluginInstruction::Update(vec![(
         None,
         Some(client_id),
-        Event::Key(Key::Ctrl('s')), // this triggers the enent in the fixture plugin
+        Event::Key(Key::Ctrl(CharOrArrow::Char('s'))), // this triggers the enent in the fixture plugin
     )]));
     screen_thread.join().unwrap(); // this might take a while if the cache is cold
     teardown();
@@ -4786,7 +4788,7 @@ pub fn focus_terminal_pane_plugin_command() {
     let _ = plugin_thread_sender.send(PluginInstruction::Update(vec![(
         None,
         Some(client_id),
-        Event::Key(Key::Ctrl('t')), // this triggers the enent in the fixture plugin
+        Event::Key(Key::Ctrl(CharOrArrow::Char('t'))), // this triggers the enent in the fixture plugin
     )]));
     screen_thread.join().unwrap(); // this might take a while if the cache is cold
     teardown();
@@ -4856,7 +4858,7 @@ pub fn focus_plugin_pane_plugin_command() {
     let _ = plugin_thread_sender.send(PluginInstruction::Update(vec![(
         None,
         Some(client_id),
-        Event::Key(Key::Ctrl('u')), // this triggers the enent in the fixture plugin
+        Event::Key(Key::Ctrl(CharOrArrow::Char('u'))), // this triggers the enent in the fixture plugin
     )]));
     screen_thread.join().unwrap(); // this might take a while if the cache is cold
     teardown();
@@ -4926,7 +4928,7 @@ pub fn rename_terminal_pane_plugin_command() {
     let _ = plugin_thread_sender.send(PluginInstruction::Update(vec![(
         None,
         Some(client_id),
-        Event::Key(Key::Ctrl('v')), // this triggers the enent in the fixture plugin
+        Event::Key(Key::Ctrl(CharOrArrow::Char('v'))), // this triggers the enent in the fixture plugin
     )]));
     screen_thread.join().unwrap(); // this might take a while if the cache is cold
     teardown();
@@ -4996,7 +4998,7 @@ pub fn rename_plugin_pane_plugin_command() {
     let _ = plugin_thread_sender.send(PluginInstruction::Update(vec![(
         None,
         Some(client_id),
-        Event::Key(Key::Ctrl('w')), // this triggers the enent in the fixture plugin
+        Event::Key(Key::Ctrl(CharOrArrow::Char('w'))), // this triggers the enent in the fixture plugin
     )]));
     screen_thread.join().unwrap(); // this might take a while if the cache is cold
     teardown();
@@ -5066,7 +5068,7 @@ pub fn rename_tab_plugin_command() {
     let _ = plugin_thread_sender.send(PluginInstruction::Update(vec![(
         None,
         Some(client_id),
-        Event::Key(Key::Ctrl('x')), // this triggers the enent in the fixture plugin
+        Event::Key(Key::Ctrl(CharOrArrow::Char('x'))), // this triggers the enent in the fixture plugin
     )]));
     screen_thread.join().unwrap(); // this might take a while if the cache is cold
     teardown();
@@ -5145,7 +5147,7 @@ pub fn send_configuration_to_plugins() {
     let _ = plugin_thread_sender.send(PluginInstruction::Update(vec![(
         None,
         Some(client_id),
-        Event::Key(Key::Ctrl('z')), // this triggers the enent in the fixture plugin
+        Event::Key(Key::Ctrl(CharOrArrow::Char('z'))), // this triggers the enent in the fixture plugin
     )]));
     screen_thread.join().unwrap(); // this might take a while if the cache is cold
     teardown();
@@ -5212,7 +5214,7 @@ pub fn request_plugin_permissions() {
     let _ = plugin_thread_sender.send(PluginInstruction::Update(vec![(
         None,
         Some(client_id),
-        Event::Key(Key::Ctrl('1')), // this triggers the enent in the fixture plugin
+        Event::Key(Key::Ctrl(CharOrArrow::Char('1'))), // this triggers the enent in the fixture plugin
     )]));
     screen_thread.join().unwrap(); // this might take a while if the cache is cold
     teardown();
@@ -5303,7 +5305,7 @@ pub fn granted_permission_request_result() {
     let _ = plugin_thread_sender.send(PluginInstruction::Update(vec![(
         None,
         Some(client_id),
-        Event::Key(Key::Ctrl('1')), // this triggers the enent in the fixture plugin
+        Event::Key(Key::Ctrl(CharOrArrow::Char('1'))), // this triggers the enent in the fixture plugin
     )]));
     screen_thread.join().unwrap();
     teardown();
@@ -5393,7 +5395,7 @@ pub fn denied_permission_request_result() {
     let _ = plugin_thread_sender.send(PluginInstruction::Update(vec![(
         None,
         Some(client_id),
-        Event::Key(Key::Ctrl('1')), // this triggers the enent in the fixture plugin
+        Event::Key(Key::Ctrl(CharOrArrow::Char('1'))), // this triggers the enent in the fixture plugin
     )]));
     screen_thread.join().unwrap();
     teardown();
@@ -5462,7 +5464,7 @@ pub fn run_command_plugin_command() {
     let _ = plugin_thread_sender.send(PluginInstruction::Update(vec![(
         None,
         Some(client_id),
-        Event::Key(Key::Ctrl('2')), // this triggers the enent in the fixture plugin
+        Event::Key(Key::Ctrl(CharOrArrow::Char('2'))), // this triggers the enent in the fixture plugin
     )]));
     background_jobs_thread.join().unwrap(); // this might take a while if the cache is cold
     teardown();
@@ -5539,7 +5541,7 @@ pub fn run_command_with_env_vars_and_cwd_plugin_command() {
     let _ = plugin_thread_sender.send(PluginInstruction::Update(vec![(
         None,
         Some(client_id),
-        Event::Key(Key::Ctrl('3')), // this triggers the enent in the fixture plugin
+        Event::Key(Key::Ctrl(CharOrArrow::Char('3'))), // this triggers the enent in the fixture plugin
     )]));
     background_jobs_thread.join().unwrap(); // this might take a while if the cache is cold
     teardown();
@@ -5616,7 +5618,7 @@ pub fn web_request_plugin_command() {
     let _ = plugin_thread_sender.send(PluginInstruction::Update(vec![(
         None,
         Some(client_id),
-        Event::Key(Key::Ctrl('4')), // this triggers the enent in the fixture plugin
+        Event::Key(Key::Ctrl(CharOrArrow::Char('4'))), // this triggers the enent in the fixture plugin
     )]));
     background_jobs_thread.join().unwrap(); // this might take a while if the cache is cold
     teardown();

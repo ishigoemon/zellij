@@ -136,117 +136,117 @@ impl ZellijPlugin for State {
                 Key::Char('6') => close_focused_tab(),
                 Key::Char('7') => undo_rename_tab(),
                 Key::Char('8') => quit_zellij(),
-                Key::Ctrl('a') => previous_swap_layout(),
-                Key::Ctrl('b') => next_swap_layout(),
-                Key::Ctrl('c') => {
+                Key::Ctrl(CharOrArrow::Char('a')) => previous_swap_layout(),
+                Key::Ctrl(CharOrArrow::Char('b')) => next_swap_layout(),
+                Key::Ctrl(CharOrArrow::Char('c')) => {
                     let tab_name = "my tab name";
                     go_to_tab_name(tab_name)
                 },
-                Key::Ctrl('d') => {
+                Key::Ctrl(CharOrArrow::Char('d')) => {
                     let tab_name = "my tab name";
                     focus_or_create_tab(tab_name)
                 },
-                Key::Ctrl('e') => {
+                Key::Ctrl(CharOrArrow::Char('e')) => {
                     let tab_index = 2;
                     go_to_tab(tab_index)
                 },
-                Key::Ctrl('f') => {
+                Key::Ctrl(CharOrArrow::Char('f')) => {
                     let plugin_url = "file:/path/to/my/plugin.wasm";
                     start_or_reload_plugin(plugin_url)
                 },
-                Key::Ctrl('g') => {
+                Key::Ctrl(CharOrArrow::Char('g')) => {
                     open_file(FileToOpen {
                         path: std::path::PathBuf::from("/path/to/my/file.rs"),
                         ..Default::default()
                     });
                 },
-                Key::Ctrl('h') => {
+                Key::Ctrl(CharOrArrow::Char('h')) => {
                     open_file_floating(FileToOpen {
                         path: std::path::PathBuf::from("/path/to/my/file.rs"),
                         ..Default::default()
                     });
                 },
-                Key::Ctrl('i') => {
+                Key::Ctrl(CharOrArrow::Char('i')) => {
                     open_file(FileToOpen {
                         path: std::path::PathBuf::from("/path/to/my/file.rs"),
                         line_number: Some(42),
                         ..Default::default()
                     });
                 },
-                Key::Ctrl('j') => {
+                Key::Ctrl(CharOrArrow::Char('j')) => {
                     open_file_floating(FileToOpen {
                         path: std::path::PathBuf::from("/path/to/my/file.rs"),
                         line_number: Some(42),
                         ..Default::default()
                     });
                 },
-                Key::Ctrl('k') => {
+                Key::Ctrl(CharOrArrow::Char('k')) => {
                     open_terminal(std::path::PathBuf::from("/path/to/my/file.rs").as_path());
                 },
-                Key::Ctrl('l') => {
+                Key::Ctrl(CharOrArrow::Char('l')) => {
                     open_terminal_floating(
                         std::path::PathBuf::from("/path/to/my/file.rs").as_path(),
                     );
                 },
-                Key::Ctrl('m') => {
+                Key::Ctrl(CharOrArrow::Char('m')) => {
                     open_command_pane(CommandToRun {
                         path: std::path::PathBuf::from("/path/to/my/file.rs"),
                         args: vec!["arg1".to_owned(), "arg2".to_owned()],
                         ..Default::default()
                     });
                 },
-                Key::Ctrl('n') => {
+                Key::Ctrl(CharOrArrow::Char('n')) => {
                     open_command_pane_floating(CommandToRun {
                         path: std::path::PathBuf::from("/path/to/my/file.rs"),
                         args: vec!["arg1".to_owned(), "arg2".to_owned()],
                         ..Default::default()
                     });
                 },
-                Key::Ctrl('o') => {
+                Key::Ctrl(CharOrArrow::Char('o')) => {
                     switch_tab_to(1);
                 },
-                Key::Ctrl('p') => {
+                Key::Ctrl(CharOrArrow::Char('p')) => {
                     hide_self();
                 },
-                Key::Ctrl('q') => {
+                Key::Ctrl(CharOrArrow::Char('q')) => {
                     let should_float_if_hidden = false;
                     show_self(should_float_if_hidden);
                 },
-                Key::Ctrl('r') => {
+                Key::Ctrl(CharOrArrow::Char('r')) => {
                     close_terminal_pane(1);
                 },
-                Key::Ctrl('s') => {
+                Key::Ctrl(CharOrArrow::Char('s')) => {
                     close_plugin_pane(1);
                 },
-                Key::Ctrl('t') => {
+                Key::Ctrl(CharOrArrow::Char('t')) => {
                     let should_float_if_hidden = false;
                     focus_terminal_pane(1, should_float_if_hidden);
                 },
-                Key::Ctrl('u') => {
+                Key::Ctrl(CharOrArrow::Char('u')) => {
                     let should_float_if_hidden = false;
                     focus_plugin_pane(1, should_float_if_hidden);
                 },
-                Key::Ctrl('v') => {
+                Key::Ctrl(CharOrArrow::Char('v')) => {
                     rename_terminal_pane(1, "new terminal_pane_name");
                 },
-                Key::Ctrl('w') => {
+                Key::Ctrl(CharOrArrow::Char('w')) => {
                     rename_plugin_pane(1, "new plugin_pane_name");
                 },
-                Key::Ctrl('x') => {
+                Key::Ctrl(CharOrArrow::Char('x')) => {
                     rename_tab(1, "new tab name");
                 },
-                Key::Ctrl('z') => {
+                Key::Ctrl(CharOrArrow::Char('z')) => {
                     go_to_tab_name(&format!("{:?}", self.configuration));
                 },
-                Key::Ctrl('1') => {
+                Key::Ctrl(CharOrArrow::Char('1')) => {
                     request_permission(&[PermissionType::ReadApplicationState]);
                 },
-                Key::Ctrl('2') => {
+                Key::Ctrl(CharOrArrow::Char('2')) => {
                     let mut context = BTreeMap::new();
                     context.insert("user_key_1".to_owned(), "user_value_1".to_owned());
                     run_command(&["ls", "-l"], context);
                 },
-                Key::Ctrl('3') => {
+                Key::Ctrl(CharOrArrow::Char('3')) => {
                     let mut context = BTreeMap::new();
                     context.insert("user_key_2".to_owned(), "user_value_2".to_owned());
                     let mut env_vars = BTreeMap::new();
@@ -258,7 +258,7 @@ impl ZellijPlugin for State {
                         context,
                     );
                 },
-                Key::Ctrl('4') => {
+                Key::Ctrl(CharOrArrow::Char('4')) => {
                     let mut headers = BTreeMap::new();
                     let mut context = BTreeMap::new();
                     let body = vec![1, 2, 3];

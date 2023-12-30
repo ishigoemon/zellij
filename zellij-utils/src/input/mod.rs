@@ -63,13 +63,15 @@ mod not_wasm {
 
         // *** THIS IS WHERE WE SHOULD WORK AROUND ISSUES WITH TERMWIZ ***
         if raw_bytes == [8] {
-            return Key::Ctrl('h');
+            return Key::Ctrl(CharOrArrow::Char('h'));
         };
 
         match event.key {
             KeyCode::Char(c) => {
                 if modifiers.contains(Modifiers::CTRL) {
-                    Key::Ctrl(c.to_lowercase().next().unwrap_or_default())
+                    Key::Ctrl(CharOrArrow::Char(
+                        c.to_lowercase().next().unwrap_or_default(),
+                    ))
                 } else if modifiers.contains(Modifiers::ALT) {
                     Key::Alt(CharOrArrow::Char(c))
                 } else {
@@ -80,6 +82,8 @@ mod not_wasm {
             KeyCode::LeftArrow | KeyCode::ApplicationLeftArrow => {
                 if modifiers.contains(Modifiers::ALT) {
                     Key::Alt(CharOrArrow::Direction(Direction::Left))
+                } else if modifiers.contains(Modifiers::CTRL) {
+                    Key::Ctrl(CharOrArrow::Direction(Direction::Left))
                 } else {
                     Key::Left
                 }
@@ -87,6 +91,8 @@ mod not_wasm {
             KeyCode::RightArrow | KeyCode::ApplicationRightArrow => {
                 if modifiers.contains(Modifiers::ALT) {
                     Key::Alt(CharOrArrow::Direction(Direction::Right))
+                } else if modifiers.contains(Modifiers::CTRL) {
+                    Key::Ctrl(CharOrArrow::Direction(Direction::Right))
                 } else {
                     Key::Right
                 }
@@ -95,6 +101,8 @@ mod not_wasm {
                 if modifiers.contains(Modifiers::ALT) {
                     //Key::AltPlusUpArrow
                     Key::Alt(CharOrArrow::Direction(Direction::Up))
+                } else if modifiers.contains(Modifiers::CTRL) {
+                    Key::Ctrl(CharOrArrow::Direction(Direction::Up))
                 } else {
                     Key::Up
                 }
@@ -102,6 +110,8 @@ mod not_wasm {
             KeyCode::DownArrow | KeyCode::ApplicationDownArrow => {
                 if modifiers.contains(Modifiers::ALT) {
                     Key::Alt(CharOrArrow::Direction(Direction::Down))
+                } else if modifiers.contains(Modifiers::CTRL) {
+                    Key::Ctrl(CharOrArrow::Direction(Direction::Down))
                 } else {
                     Key::Down
                 }

@@ -467,7 +467,7 @@ pub fn style_key_with_modifier(
                 format!("{}", key)
             } else {
                 match key {
-                    Key::Ctrl(c) => format!("{}", Key::Char(*c)),
+                    Key::Ctrl(c) => format!("{}", c),
                     Key::Alt(c) => format!("{}", c),
                     _ => format!("{}", key),
                 }
@@ -542,8 +542,8 @@ pub mod tests {
     fn big_keymap() -> Vec<(Key, Vec<Action>)> {
         vec![
             (Key::Char('a'), vec![Action::Quit]),
-            (Key::Ctrl('b'), vec![Action::ScrollUp]),
-            (Key::Ctrl('d'), vec![Action::ScrollDown]),
+            (Key::Ctrl(CharOrArrow::Char('b')), vec![Action::ScrollUp]),
+            (Key::Ctrl(CharOrArrow::Char('d')), vec![Action::ScrollDown]),
             (
                 Key::Alt(CharOrArrow::Char('c')),
                 vec![Action::ScrollDown, Action::SwitchToMode(InputMode::Normal)],
@@ -557,7 +557,11 @@ pub mod tests {
 
     #[test]
     fn common_modifier_with_ctrl_keys() {
-        let keyvec = vec![Key::Ctrl('a'), Key::Ctrl('b'), Key::Ctrl('c')];
+        let keyvec = vec![
+            Key::Ctrl(CharOrArrow::Char('a')),
+            Key::Ctrl(CharOrArrow::Char('b')),
+            Key::Ctrl(CharOrArrow::Char('c')),
+        ];
         let ret = get_common_modifier(keyvec.iter().collect());
         assert_eq!(ret, Some("Ctrl".to_string()));
     }
@@ -600,8 +604,8 @@ pub mod tests {
         let keyvec = vec![
             Key::Alt(CharOrArrow::Direction(Direction::Left)),
             Key::Alt(CharOrArrow::Char('z')),
-            Key::Ctrl('a'),
-            Key::Ctrl('1'),
+            Key::Ctrl(CharOrArrow::Char('a')),
+            Key::Ctrl(CharOrArrow::Char('1')),
         ];
         let ret = get_common_modifier(keyvec.iter().collect());
         assert_eq!(ret, None);
@@ -616,7 +620,7 @@ pub mod tests {
 
     #[test]
     fn common_modifier_with_ctrl_and_normal_keys() {
-        let keyvec = vec![Key::Ctrl('a'), Key::Char('f'), Key::Down];
+        let keyvec = vec![Key::Ctrl(CharOrArrow::Char('a')), Key::Char('f'), Key::Down];
         let ret = get_common_modifier(keyvec.iter().collect());
         assert_eq!(ret, None);
     }
@@ -675,7 +679,13 @@ pub mod tests {
         let keymap = big_keymap();
         let ret = action_key_group(&keymap, &[&[Action::ScrollDown], &[Action::ScrollUp]]);
         // Mind the order!
-        assert_eq!(ret, vec![Key::Ctrl('d'), Key::Ctrl('b')]);
+        assert_eq!(
+            ret,
+            vec![
+                Key::Ctrl(CharOrArrow::Char('d')),
+                Key::Ctrl(CharOrArrow::Char('b'))
+            ]
+        );
     }
 
     fn get_palette() -> Palette {
@@ -767,10 +777,10 @@ pub mod tests {
     #[test]
     fn style_key_with_modifier_common_ctrl_modifier_chars() {
         let keyvec = vec![
-            Key::Ctrl('a'),
-            Key::Ctrl('b'),
-            Key::Ctrl('c'),
-            Key::Ctrl('d'),
+            Key::Ctrl(CharOrArrow::Char('a')),
+            Key::Ctrl(CharOrArrow::Char('b')),
+            Key::Ctrl(CharOrArrow::Char('c')),
+            Key::Ctrl(CharOrArrow::Char('d')),
         ];
         let palette = get_palette();
 
@@ -816,7 +826,7 @@ pub mod tests {
     fn style_key_with_modifier_ctrl_alt_char_mixed() {
         let keyvec = vec![
             Key::Alt(CharOrArrow::Char('a')),
-            Key::Ctrl('b'),
+            Key::Ctrl(CharOrArrow::Char('b')),
             Key::Char('c'),
         ];
         let palette = get_palette();
@@ -855,7 +865,11 @@ pub mod tests {
 
     #[test]
     fn style_key_with_modifier_unprintables_with_common_ctrl_modifier() {
-        let keyvec = vec![Key::Ctrl('\n'), Key::Ctrl(' '), Key::Ctrl('\t')];
+        let keyvec = vec![
+            Key::Ctrl(CharOrArrow::Char('\n')),
+            Key::Ctrl(CharOrArrow::Char(' ')),
+            Key::Ctrl(CharOrArrow::Char('\t')),
+        ];
         let palette = get_palette();
 
         let ret = style_key_with_modifier(&keyvec, &palette, None);

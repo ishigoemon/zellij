@@ -616,7 +616,7 @@ mod tests {
 
     #[test]
     fn full_length_shortcut_with_ctrl_key() {
-        let keyvec = vec![Key::Ctrl('a')];
+        let keyvec = vec![Key::Ctrl(CharOrArrow::Char('a'))];
         let palette = get_palette();
 
         let ret = full_length_shortcut(false, keyvec, "Foobar", palette);
@@ -649,7 +649,11 @@ mod tests {
 
     #[test]
     fn full_length_shortcut_with_heterogenous_key_group() {
-        let keyvec = vec![Key::Char('a'), Key::Ctrl('b'), Key::Char('\n')];
+        let keyvec = vec![
+            Key::Char('a'),
+            Key::Ctrl(CharOrArrow::Char('b')),
+            Key::Char('\n'),
+        ];
         let palette = get_palette();
 
         let ret = full_length_shortcut(false, keyvec, "Foobar", palette);
@@ -660,7 +664,11 @@ mod tests {
 
     #[test]
     fn full_length_shortcut_with_key_group_shared_ctrl_modifier() {
-        let keyvec = vec![Key::Ctrl('a'), Key::Ctrl('b'), Key::Ctrl('c')];
+        let keyvec = vec![
+            Key::Ctrl(CharOrArrow::Char('a')),
+            Key::Ctrl(CharOrArrow::Char('b')),
+            Key::Ctrl(CharOrArrow::Char('c')),
+        ];
         let palette = get_palette();
 
         let ret = full_length_shortcut(false, keyvec, "Foobar", palette);
@@ -738,10 +746,22 @@ mod tests {
             keybinds: vec![(
                 InputMode::Pane,
                 vec![
-                    (Key::Ctrl('a'), vec![Action::MoveFocus(Direction::Left)]),
-                    (Key::Ctrl('\n'), vec![Action::MoveFocus(Direction::Down)]),
-                    (Key::Ctrl('1'), vec![Action::MoveFocus(Direction::Up)]),
-                    (Key::Ctrl(' '), vec![Action::MoveFocus(Direction::Right)]),
+                    (
+                        Key::Ctrl(CharOrArrow::Char('a')),
+                        vec![Action::MoveFocus(Direction::Left)],
+                    ),
+                    (
+                        Key::Ctrl(CharOrArrow::Char('\n')),
+                        vec![Action::MoveFocus(Direction::Down)],
+                    ),
+                    (
+                        Key::Ctrl(CharOrArrow::Char('1')),
+                        vec![Action::MoveFocus(Direction::Up)],
+                    ),
+                    (
+                        Key::Ctrl(CharOrArrow::Char(' ')),
+                        vec![Action::MoveFocus(Direction::Right)],
+                    ),
                     (Key::Backspace, vec![Action::NewPane(None, None), TO_NORMAL]),
                     (Key::Esc, vec![Action::CloseFocus, TO_NORMAL]),
                     (Key::End, vec![Action::ToggleFocusFullscreen, TO_NORMAL]),
